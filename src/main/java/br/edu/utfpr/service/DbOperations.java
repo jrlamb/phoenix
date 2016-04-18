@@ -5,7 +5,10 @@
  */
 package br.edu.utfpr.service;
 
+import br.edu.utfpr.dao.DAO;
+import br.edu.utfpr.dao.MaquinaDao;
 import br.edu.utfpr.dao.StudentDao;
+import br.edu.utfpr.maqcontrol.Maquina;
 import br.edu.utfpr.pojo.Student;
 import java.util.List;
 
@@ -16,25 +19,37 @@ import java.util.List;
 public class DbOperations {
 
     StudentDao studentDAO = new StudentDao();
+    MaquinaDao maquinaDao = new MaquinaDao();
+
+    DAO dao;
 
     public static void main(String[] args) {
         DbOperations dbOperations = new DbOperations();
-        Student createStudent = dbOperations.createStudent();
+        //Student createStudent = dbOperations.createStudent();
+//        Maquina createdMaquina = dbOperations.createMaquina();
+//        Maquina createdMaquina2 = dbOperations.createMaquina();
 
-        List<Student> studentList = dbOperations.getStudentList();
-        if (studentList != null) {
-            for (Student student : studentList) {
-                System.out.println("Student Name : " + student.getName());
-            }
-        }
-        dbOperations.updateStudent(createStudent.getId());
-        Student student = dbOperations.getStudent(createStudent.getId());
-        if (student != null) {
-            System.out.println("Student Details After Updation : " + student.getName());
-        }
+        dbOperations.createMaquina("ceifa");
+        dbOperations.createMaquina("trator");
+        
 
-        dbOperations.deleteStudent(createStudent.getId());
+//        List<Student> studentList = dbOperations.getStudentList();
+//        if (studentList != null) {
+//            for (Student student : studentList) {
+//                System.out.println("Student Name : " + student.getName());
+//            }
+//        }
+//        dbOperations.updateStudent(createStudent.getId());
+//        Student student = dbOperations.getStudent(createStudent.getId());
+//        if (student != null) {
+//            System.out.println("Student Details After Updation : " + student.getName());
+//        }
+//
+//        dbOperations.deleteStudent(createStudent.getId());
+    }
 
+    public DbOperations() {
+        this.dao = new DAO();
     }
 
     public Student createStudent() {
@@ -45,6 +60,12 @@ public class DbOperations {
         s.setRollnumber(007);
         studentDAO.addStudent(s);
         return s;
+    }
+
+    public void createMaquina(String s) {
+        Maquina maquina = new Maquina();
+        maquina.setDescricao(s);
+        dao.add(maquina);
     }
 
     public void updateStudent(Integer id) {

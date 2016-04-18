@@ -29,7 +29,7 @@ public class HibernateConnector {
          * Connection Information..
          */
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/hibernate");
+        cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/maqcontrol");
         cfg.setProperty("hibernate.connection.username", "root");
         cfg.setProperty("hibernate.connection.password", "mysql");
         cfg.setProperty("hibernate.show_sql", "false");
@@ -39,7 +39,8 @@ public class HibernateConnector {
          * Mapping Resources..
          */
         //cfg.addResource("com/onlinetutorialspoint/pojo/Student.hbm.xml");
-        cfg.addResource("br/edu/utfpr/pojo/Student.hbm.xml");
+        cfg.addResource("br/edu/utfpr/pojo/Maquina.hbm.xml");
+//        cfg.addResource("br/edu/utfpr/pojo/Student.hbm.xml");
  
         sessionFactory = cfg.buildSessionFactory();
     }
