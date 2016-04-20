@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,10 +22,12 @@ public class Maquina {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private int id;
-    
+
     @Column(name = "descricao", length = 50)
     private String descricao;
 
+    @OneToOne
+    @JoinColumn(name = "idMarca")
     public Marca marca;
 
     public Maquina() {
@@ -54,6 +58,4 @@ public class Maquina {
         this.marca = marca;
     }
 
-    
-    
 }

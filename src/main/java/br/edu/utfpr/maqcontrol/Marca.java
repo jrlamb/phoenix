@@ -28,4 +28,10 @@ public class Marca {
       // TODO: implement
    }
 
+    public Marca(String descricao) {
+        this.descricao = descricao;
+    }
+   
+   
+
 }

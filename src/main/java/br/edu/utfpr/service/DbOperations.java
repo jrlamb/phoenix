@@ -9,6 +9,7 @@ import br.edu.utfpr.dao.DAO;
 import br.edu.utfpr.dao.MaquinaDao;
 import br.edu.utfpr.dao.StudentDao;
 import br.edu.utfpr.maqcontrol.Maquina;
+import br.edu.utfpr.maqcontrol.Marca;
 import br.edu.utfpr.pojo.Student;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class DbOperations {
 //        Maquina createdMaquina = dbOperations.createMaquina();
 //        Maquina createdMaquina2 = dbOperations.createMaquina();
 
-        dbOperations.createMaquina("ceifa");
-        dbOperations.createMaquina("trator");
+        dbOperations.createMaquina("ceifa", "john deere");
+        dbOperations.createMaquina("trator", "new holland");
         
 
 //        List<Student> studentList = dbOperations.getStudentList();
@@ -62,9 +63,14 @@ public class DbOperations {
         return s;
     }
 
-    public void createMaquina(String s) {
+    public void createMaquina(String descricao, String m) {
+        
+        Marca marca = new Marca(m);
+        dao.add(marca);
+        
         Maquina maquina = new Maquina();
-        maquina.setDescricao(s);
+        maquina.setDescricao(descricao);
+        maquina.setMarca(marca);
         dao.add(maquina);
     }
 

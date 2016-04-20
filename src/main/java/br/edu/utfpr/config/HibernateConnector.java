@@ -31,15 +31,17 @@ public class HibernateConnector {
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/maqcontrol");
         cfg.setProperty("hibernate.connection.username", "root");
-        cfg.setProperty("hibernate.connection.password", "mysql");
+        cfg.setProperty("hibernate.connection.password", "root");
         cfg.setProperty("hibernate.show_sql", "false");
-        cfg.setProperty("hibernate.hbm2ddl.auto","create");
+        cfg.setProperty("hibernate.hbm2ddl.auto","update");
  
         /**
          * Mapping Resources..
          */
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Marca.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Maquina.class);
         //cfg.addResource("com/onlinetutorialspoint/pojo/Student.hbm.xml");
-        cfg.addResource("br/edu/utfpr/pojo/Maquina.hbm.xml");
+       // cfg.addResource("br/edu/utfpr/pojo/Maquina.hbm.xml");
 //        cfg.addResource("br/edu/utfpr/pojo/Student.hbm.xml");
  
         sessionFactory = cfg.buildSessionFactory();
