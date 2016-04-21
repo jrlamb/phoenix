@@ -40,6 +40,9 @@ public class HibernateConnector {
          */
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Marca.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Maquina.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Produto.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.CotacaoProduto.class);
+        
         //cfg.addResource("com/onlinetutorialspoint/pojo/Student.hbm.xml");
        // cfg.addResource("br/edu/utfpr/pojo/Maquina.hbm.xml");
 //        cfg.addResource("br/edu/utfpr/pojo/Student.hbm.xml");

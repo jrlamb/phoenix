@@ -5,6 +5,7 @@ package br.edu.utfpr.maqcontrol;
  * Module: Maquina.java Author: Juliano Purpose: Defines the Class Maquina
  * *********************************************************************
  */
+import br.edu.utfpr.enums.TipoMaquina;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,9 @@ public class Maquina {
     @OneToOne
     @JoinColumn(name = "idMarca")
     public Marca marca;
+
+    @Column(name = "tipoMaquina", length = 60)
+    private TipoMaquina tipoMaquina;
 
     public Maquina() {
         // TODO: implement
@@ -57,5 +61,12 @@ public class Maquina {
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
+
+    public Maquina(String descricao, Marca marca, TipoMaquina tipoMaquina) {
+        this.descricao = descricao;
+        this.marca = marca;
+        this.tipoMaquina = tipoMaquina;
+    }
+
 
 }
