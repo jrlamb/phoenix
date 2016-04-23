@@ -9,6 +9,6 @@ package br.edu.utfpr.enums;
  *
  * @author Juliano Rodrifo Lamb
  */
-public enum TipoMaquina {    
-       COLHEDORA, TRATOR, IMPLEMENTO, OUTRAS_MAQUINAS;
+public enum TServico {
+    MOVIMENTO, PARADA
 }

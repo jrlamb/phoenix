@@ -10,8 +10,8 @@ import br.edu.utfpr.maqcontrol.CotacaoProduto;
 import br.edu.utfpr.maqcontrol.Maquina;
 import br.edu.utfpr.maqcontrol.Marca;
 import br.edu.utfpr.maqcontrol.Produto;
-import br.edu.utfpr.enums.TipoMaquina;
-import br.edu.utfpr.enums.TipoProduto;
+import br.edu.utfpr.enums.TMaquina;
+import br.edu.utfpr.enums.TProduto;
 import java.util.Date;
 
 /**
@@ -25,10 +25,10 @@ public class App {
         Marca marca = new Marca("John Deere");
         dao.add(marca);
 
-        Maquina maquina = new Maquina("Maquina", marca, TipoMaquina.COLHEDORA);
+        Maquina maquina = new Maquina("Maquina", marca, TMaquina.COLHEDORA);
         dao.add(maquina);
 
-        Produto produto = new Produto("Filtro", TipoProduto.FILTRO_AR_FILTRANTE, 100, TipoMaquina.TRATOR, marca);
+        Produto produto = new Produto("Filtro", TProduto.FILTRO_AR_FILTRANTE, 100, TMaquina.TRATOR, marca);
         dao.add(produto);
 
         Date now = new Date();

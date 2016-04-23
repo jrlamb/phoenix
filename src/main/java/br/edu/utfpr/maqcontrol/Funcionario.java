@@ -45,6 +45,10 @@ public class Funcionario implements Serializable {
     @JoinColumn(name = "idEndereco")
     public Endereco endereco;
 
+    @OneToOne
+    @JoinColumn(name = "idEmpresa")
+    public Empresa empresa;
+
     @Column(name = "nome", length = 60)
     private String nome;
 
@@ -70,13 +74,13 @@ public class Funcionario implements Serializable {
 
     @Column(name = "fone", length = 15)
     private String fone;
-    
+
     @Column(name = "status", length = 12)
     private String status;
-    
+
     @Column(name = "quantidadeHoras")
     private float quantidadeHoras;
-    
+
     @Column(name = "salario")
     private float salario;
 

@@ -9,6 +9,6 @@ package br.edu.utfpr.enums;
  *
  * @author JulianoRodrigo
  */
-public enum Estado {
+public enum TEstado {
     PARANA, SANTA_CATARINA, RIO_GRANDE_DO_SUL;
 }

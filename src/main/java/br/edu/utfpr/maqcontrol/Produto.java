@@ -5,10 +5,12 @@ package br.edu.utfpr.maqcontrol;
  * Module: Produto.java Author: Juliano Purpose: Defines the Class Produto
  * *********************************************************************
  */
-import br.edu.utfpr.enums.TipoMaquina;
-import br.edu.utfpr.enums.TipoProduto;
+import br.edu.utfpr.enums.TMaquina;
+import br.edu.utfpr.enums.TProduto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -29,13 +31,14 @@ public class Produto {
     private String descricao;
 
     @Column(name = "tipo", length = 60)
-    private TipoProduto tipo;
+    private TProduto tipo;
 
     @Column(name = "troca")
     private int troca;
 
     @Column(name = "aplicacao", length = 60)
-    private TipoMaquina tipoMaquina;
+    //@Enumerated(EnumType.STRING)
+    private TMaquina tipoMaquina;
 
     @OneToOne
     @JoinColumn(name = "idMarca")
@@ -45,7 +48,7 @@ public class Produto {
         // TODO: implement
     }
 
-    public Produto(String descricao, TipoProduto tipo, int troca, TipoMaquina tipoMaquina, Marca marca) {
+    public Produto(String descricao, TProduto tipo, int troca, TMaquina tipoMaquina, Marca marca) {
         this.descricao = descricao;
         this.tipo = tipo;
         this.troca = troca;

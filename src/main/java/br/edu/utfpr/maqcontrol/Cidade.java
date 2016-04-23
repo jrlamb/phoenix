@@ -5,10 +5,12 @@
  */
 package br.edu.utfpr.maqcontrol;
 
-import br.edu.utfpr.enums.Estado;
+import br.edu.utfpr.enums.TEstado;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -31,12 +33,13 @@ public class Cidade implements Serializable {
     private String nome;
 
     @Column(name = "estado", length = 20)
-    private Estado estado;
+    //@Enumerated(EnumType.STRING)
+    private TEstado estado;
 
     public Cidade() {
     }
 
-    public Cidade(String nome, Estado estado) {
+    public Cidade(String nome, TEstado estado) {
         this.nome = nome;
         this.estado = estado;
     }

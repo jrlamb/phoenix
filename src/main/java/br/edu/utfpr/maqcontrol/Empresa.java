@@ -5,8 +5,6 @@
  */
 package br.edu.utfpr.maqcontrol;
 
-import br.edu.utfpr.enums.TMaquina;
-import br.edu.utfpr.enums.TProduto;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,11 +17,11 @@ import javax.persistence.Table;
 
 /**
  *
- * @author JulianoRodrigo
+ * @author Juliano Rodrifo Lamb
  */
 @Entity
-@Table(name = "bairro", catalog = "maqcontrol")
-public class Bairro implements Serializable {
+@Table(name = "empresa", catalog = "maqcontrol")
+public class Empresa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -31,22 +29,22 @@ public class Bairro implements Serializable {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "idCidade")
-    public Cidade cidade;
+    @JoinColumn(name = "idEndereco")
+    public Endereco endereco;
 
-    @Column(name = "descricao", length = 50)
-    private String descricao;
+    @Column(name = "nomeFantasia", length = 60)
+    private String nomeFantasia;
 
-    @Column(name = "cep", length = 9)
-    private String cep;
+    @Column(name = "razaoSocial", length = 60)
+    private String razaoSocial;
 
-    public Bairro() {
+    public Empresa() {
     }
 
-    public Bairro(Cidade cidade, String descricao, String cep) {
-        this.cidade = cidade;
-        this.descricao = descricao;
-        this.cep = cep;
+    public Empresa(Endereco endereco, String nomeFantasia, String razaoSocial) {
+        this.endereco = endereco;
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
     }
 
 }

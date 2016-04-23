@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.utfpr.config;
 
 import org.hibernate.HibernateException;
@@ -16,25 +15,26 @@ import org.hibernate.cfg.Configuration;
  * @author JulianoRodrigo
  */
 public class HibernateConnector {
-   private static HibernateConnector me;
+
+    private static HibernateConnector me;
     private Configuration cfg;
     private SessionFactory sessionFactory;
- 
+
     private HibernateConnector() throws HibernateException {
- 
+
         // build the config
         cfg = new Configuration();
- 
+
         /**
          * Connection Information..
          */
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/maqcontrol");
         cfg.setProperty("hibernate.connection.username", "root");
-        cfg.setProperty("hibernate.connection.password", "mysql");
+        cfg.setProperty("hibernate.connection.password", "root");
         cfg.setProperty("hibernate.show_sql", "false");
-        cfg.setProperty("hibernate.hbm2ddl.auto","update");
- 
+        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
+        
         /**
          * Mapping Resources..
          */
@@ -45,22 +45,27 @@ public class HibernateConnector {
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Cidade.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Bairro.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Endereco.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Area.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Empresa.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Operacao.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.TipoOperacao.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Funcao.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Funcionario.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Manutencao.class);
         
-        //cfg.addResource("com/onlinetutorialspoint/pojo/Student.hbm.xml");
-       // cfg.addResource("br/edu/utfpr/pojo/Maquina.hbm.xml");
-//        cfg.addResource("br/edu/utfpr/pojo/Student.hbm.xml");
- 
+        
+
         sessionFactory = cfg.buildSessionFactory();
     }
- 
+
     public static synchronized HibernateConnector getInstance() throws HibernateException {
         if (me == null) {
             me = new HibernateConnector();
         }
- 
+
         return me;
     }
- 
+
     public Session getSession() throws HibernateException {
         Session session = sessionFactory.openSession();
         if (!session.isConnected()) {
@@ -68,8 +73,8 @@ public class HibernateConnector {
         }
         return session;
     }
- 
+
     private void reconnect() throws HibernateException {
         this.sessionFactory = cfg.buildSessionFactory();
-    } 
+    }
 }

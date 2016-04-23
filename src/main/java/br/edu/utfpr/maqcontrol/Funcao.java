@@ -32,7 +32,7 @@ public class Funcao implements Serializable {
     private String descricao;
 
     @ManyToMany(mappedBy = "funcao")
-    private List<Funcionario> Funcionario;
+    private List<Funcionario> funcionario;
 
     public Funcao() {
     }

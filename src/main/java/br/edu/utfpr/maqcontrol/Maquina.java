@@ -5,9 +5,11 @@ package br.edu.utfpr.maqcontrol;
  * Module: Maquina.java Author: Juliano Purpose: Defines the Class Maquina
  * *********************************************************************
  */
-import br.edu.utfpr.enums.TipoMaquina;
+import br.edu.utfpr.enums.TMaquina;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -31,8 +33,9 @@ public class Maquina {
     @JoinColumn(name = "idMarca")
     public Marca marca;
 
+    //@Enumerated(EnumType.STRING)
     @Column(name = "tipoMaquina", length = 60)
-    private TipoMaquina tipoMaquina;
+    private TMaquina tipoMaquina;
 
     public Maquina() {
         // TODO: implement
@@ -62,11 +65,10 @@ public class Maquina {
         this.marca = marca;
     }
 
-    public Maquina(String descricao, Marca marca, TipoMaquina tipoMaquina) {
+    public Maquina(String descricao, Marca marca, TMaquina tipoMaquina) {
         this.descricao = descricao;
         this.marca = marca;
         this.tipoMaquina = tipoMaquina;
     }
-
 
 }
