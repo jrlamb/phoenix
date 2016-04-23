@@ -28,15 +28,15 @@ public class App {
         Maquina maquina = new Maquina("Maquina", marca, TMaquina.COLHEDORA);
         dao.add(maquina);
 
-        Produto produto = new Produto("Filtro", TProduto.FILTRO_AR_FILTRANTE, 100, TMaquina.TRATOR, marca);
-        dao.add(produto);
-
-        Date now = new Date();
-        // SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-
-        CotacaoProduto cotacaoProduto = new CotacaoProduto(now, produto, 100.5f);
-        dao.add(cotacaoProduto);
-        System.exit(0);
+////        Produto produto = new Produto("Filtro", TProduto.FILTRO_AR_FILTRANTE, 100, TMaquina.TRATOR, marca);
+////        dao.add(produto);
+//
+//        Date now = new Date();
+//        // SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+//
+//        CotacaoProduto cotacaoProduto = new CotacaoProduto(now, produto, 100.5f);
+//        dao.add(cotacaoProduto);
+//        System.exit(0);
 
     }
 }

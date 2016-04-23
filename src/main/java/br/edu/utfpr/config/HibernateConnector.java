@@ -31,9 +31,9 @@ public class HibernateConnector {
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/maqcontrol");
         cfg.setProperty("hibernate.connection.username", "root");
-        cfg.setProperty("hibernate.connection.password", "root");
+        cfg.setProperty("hibernate.connection.password", "mysql");
         cfg.setProperty("hibernate.show_sql", "false");
-        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
+        cfg.setProperty("hibernate.hbm2ddl.auto", "create");
         
         /**
          * Mapping Resources..
@@ -52,6 +52,9 @@ public class HibernateConnector {
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Funcao.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Funcionario.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Manutencao.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Servico.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.OperacaoServico.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.OperacaoServicoId.class);
         
         
 

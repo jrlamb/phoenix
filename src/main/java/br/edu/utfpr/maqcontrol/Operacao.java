@@ -10,12 +10,14 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
@@ -32,10 +34,10 @@ public class Operacao implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "idOperacao", unique = true, nullable = false)
     private int id;
-    
+
     @Column(name = "tamanhoArea")
     private float tamanhoArea;
-    
+
     @ManyToMany
     @JoinTable(name = "manutencaoOperacao", catalog = "maqcontrol",
             joinColumns = {
@@ -48,11 +50,12 @@ public class Operacao implements Serializable {
     @JoinColumn(name = "idArea")
     public Area area;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.operacao")
+    private List<OperacaoServico> operacaoServico;
+
     @OneToOne
     @JoinColumn(name = "idTipo")
     public TipoOperacao tipoOperacao;
-
-
 
     @OneToOne
     @JoinColumn(name = "idFuncionario")
