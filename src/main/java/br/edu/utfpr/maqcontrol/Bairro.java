@@ -10,10 +10,12 @@ import br.edu.utfpr.enums.TProduto;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,8 +32,10 @@ public class Bairro implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "idCidade")
+//    @OneToOne
+//    @JoinColumn(name = "idCidade")
+    @ManyToOne
+    @JoinColumn(name = "id_cidade", foreignKey = @ForeignKey(name = "FK_CIDADE_BAIRRO"))    
     public Cidade cidade;
 
     @Column(name = "descricao", length = 50)

@@ -8,13 +8,12 @@ package br.edu.utfpr.maqcontrol;
 import br.edu.utfpr.enums.TMaquina;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,8 +28,10 @@ public class Maquina {
     @Column(name = "descricao", length = 50)
     private String descricao;
 
-    @OneToOne
-    @JoinColumn(name = "idMarca")
+    //@OneToOne
+    //@JoinColumn(name = "idMarca")
+    @ManyToOne
+    @JoinColumn(name = "id_marca", foreignKey = @ForeignKey(name = "FK_MARCA_MAQUINA"))
     public Marca marca;
 
     //@Enumerated(EnumType.STRING)

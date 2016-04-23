@@ -6,13 +6,18 @@
 package br.edu.utfpr.maqcontrol;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,8 +33,11 @@ public class Empresa implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "idEndereco")
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vinculo> vinculo = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "id_endereco", foreignKey = @ForeignKey(name = "FK_ENDERECO_EMPRESA"))
     public Endereco endereco;
 
     @Column(name = "nomeFantasia", length = 60)

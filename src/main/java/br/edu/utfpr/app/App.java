@@ -25,8 +25,8 @@ public class App {
         Marca marca = new Marca("John Deere");
         dao.add(marca);
 
-        Maquina maquina = new Maquina("Maquina", marca, TMaquina.COLHEDORA);
-        dao.add(maquina);
+        //Maquina maquina = new Maquina("Maquina", marca, TMaquina.COLHEDORA);
+        //dao.add(maquina);
 
 ////        Produto produto = new Produto("Filtro", TProduto.FILTRO_AR_FILTRANTE, 100, TMaquina.TRATOR, marca);
 ////        dao.add(produto);

@@ -31,32 +31,33 @@ public class HibernateConnector {
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/maqcontrol");
         cfg.setProperty("hibernate.connection.username", "root");
-        cfg.setProperty("hibernate.connection.password", "mysql");
+        cfg.setProperty("hibernate.connection.password", "root");
         cfg.setProperty("hibernate.show_sql", "false");
-        cfg.setProperty("hibernate.hbm2ddl.auto", "create");
-        
+        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
+
         /**
          * Mapping Resources..
          */
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Marca.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Maquina.class);
-        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Produto.class);
+
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.CotacaoProduto.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Cidade.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Bairro.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Endereco.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Area.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Empresa.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Manutencao.class);
+
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Operacao.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.TipoOperacao.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Funcao.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Funcionario.class);
-        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Manutencao.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Servico.class);
         cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.OperacaoServico.class);
-        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.OperacaoServicoId.class);
-        
-        
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.ServicoManutencao.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Produto.class);
+        cfg.addAnnotatedClass(br.edu.utfpr.maqcontrol.Vinculo.class);
 
         sessionFactory = cfg.buildSessionFactory();
     }

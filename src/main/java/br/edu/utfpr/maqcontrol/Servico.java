@@ -7,6 +7,7 @@ package br.edu.utfpr.maqcontrol;
 
 import br.edu.utfpr.enums.TServico;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,9 +31,12 @@ public class Servico implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "idServico", unique = true, nullable = false)
     private int id;
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.servico", cascade=CascadeType.ALL)
-    private List<OperacaoServico> operacaoServico;
+
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OperacaoServico> operacaoServico = new ArrayList<>();  
+
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServicoManutencao> servicoManutencao = new ArrayList<>();
 
     @Column(name = "descricao", length = 50)
     private String descricao;
@@ -42,6 +46,5 @@ public class Servico implements Serializable {
 
     public Servico() {
     }
-    
-    
+
 }

@@ -7,11 +7,11 @@ package br.edu.utfpr.maqcontrol;
  * *********************************************************************
  */
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,19 +20,21 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "cotacaoProduto", catalog = "maqcontrol")
-public class CotacaoProduto implements Serializable{
+public class CotacaoProduto implements Serializable {
 
     @Id
-    @Column(name="data", length = 50)
-    @Type(type="date")
+    @Column(name = "data", length = 50)
+    @Type(type = "date")
     private Date data;
-    
+
     @Id
+//    @ManyToOne
+//    @JoinColumn(name = "idProduto", nullable = false)
     @ManyToOne
-    @JoinColumn(name = "idProduto", nullable = false)
+    @JoinColumn(name = "id_produto", foreignKey = @ForeignKey(name = "FK_PRODUTO_COTACAO"))
     private Produto produto;
 
-    @Column(name="valor", length = 50)
+    @Column(name = "valor", length = 50)
     private Float valor;
 
     public CotacaoProduto() {
@@ -74,6 +76,4 @@ public class CotacaoProduto implements Serializable{
         return true;
     }
 
-    
-    
 }

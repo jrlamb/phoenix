@@ -6,26 +6,24 @@
 package br.edu.utfpr.maqcontrol;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Type;
 
 /**
  *
- * @author JulianoRodrigo
+ * @author Juliano Rodrifo Lamb
  */
 @Entity
-@Table(name = "operacao_servico", catalog = "maqcontrol")
-public class OperacaoServico implements Serializable {
+@Table(name = "servico_manutencao", catalog = "maqcontrol")
+public class ServicoManutencao implements Serializable {
 
     @Id
     @ManyToOne
-    private Operacao operacao;
+    private Manutencao manutencao;
 
     @Id
     @ManyToOne
@@ -35,26 +33,21 @@ public class OperacaoServico implements Serializable {
     @ManyToOne
     private Produto produto;
 
-    @Column(name = "valorUnitario")
-    private float valorUnitario;
-
     @Column(name = "quantidade")
     private float quantidade;
-
-    @Type(type = "date")
-    @Column(name = "inicio")
-    private Date inicio;
-
-    @Type(type = "date")
-    @Column(name = "fim")
-    private Date fim;
+    
+    @Column(name = "custo")    
+    private float custo;
+    
+    @Column(name = "observacao", length = 100)
+    private String observacao;
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.operacao);
-        hash = 97 * hash + Objects.hashCode(this.servico);
-        hash = 97 * hash + Objects.hashCode(this.produto);
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.manutencao);
+        hash = 11 * hash + Objects.hashCode(this.servico);
+        hash = 11 * hash + Objects.hashCode(this.produto);
         return hash;
     }
 
@@ -69,8 +62,8 @@ public class OperacaoServico implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final OperacaoServico other = (OperacaoServico) obj;
-        if (!Objects.equals(this.operacao, other.operacao)) {
+        final ServicoManutencao other = (ServicoManutencao) obj;
+        if (!Objects.equals(this.manutencao, other.manutencao)) {
             return false;
         }
         if (!Objects.equals(this.servico, other.servico)) {
@@ -81,7 +74,5 @@ public class OperacaoServico implements Serializable {
         }
         return true;
     }
-
-
 
 }

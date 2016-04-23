@@ -6,16 +6,21 @@
 package br.edu.utfpr.maqcontrol;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
@@ -33,21 +38,12 @@ public class Funcionario implements Serializable {
     @Column(name = "idFuncionario", unique = true, nullable = false)
     private int id;
 
-    @ManyToMany
-    @JoinTable(name = "funcaoFuncionario", catalog = "maqcontrol",
-            joinColumns = {
-                @JoinColumn(name = "idFuncionario")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "idFuncao")})
-    private List<Funcao> funcao;
-
-    @OneToOne
-    @JoinColumn(name = "idEndereco")
+    @ManyToOne
+    @JoinColumn(name = "id_endereco", foreignKey = @ForeignKey(name = "FK_ENDERECO_FUNCIONARIO"))
     public Endereco endereco;
 
-    @OneToOne
-    @JoinColumn(name = "idEmpresa")
-    public Empresa empresa;
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vinculo> vinculo = new ArrayList<>();
 
     @Column(name = "nome", length = 60)
     private String nome;
@@ -64,24 +60,8 @@ public class Funcionario implements Serializable {
     @Column(name = "ctps", length = 20)
     private String ctps;
 
-    @Type(type = "date")
-    @Column(name = "admissao")
-    private Date admissao;
-
-    @Type(type = "date")
-    @Column(name = "demissao")
-    private Date demissao;
-
     @Column(name = "fone", length = 15)
     private String fone;
 
-    @Column(name = "status", length = 12)
-    private String status;
-
-    @Column(name = "quantidadeHoras")
-    private float quantidadeHoras;
-
-    @Column(name = "salario")
-    private float salario;
 
 }

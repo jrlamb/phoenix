@@ -8,11 +8,12 @@ package br.edu.utfpr.maqcontrol;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,8 +29,10 @@ public class Area implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "idEmpresa")
+    //@OneToOne
+    //@JoinColumn(name = "idEmpresa")
+    @ManyToOne
+    @JoinColumn(name = "id_empresa", foreignKey = @ForeignKey(name = "FK_EMPRESA_AREA"))
     public Empresa empresa;
 
     @Column(name = "descricao", length = 60)
@@ -46,6 +49,5 @@ public class Area implements Serializable {
         this.descricao = descricao;
         this.tamanho = tamanho;
     }
-    
-    
+
 }

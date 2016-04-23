@@ -7,6 +7,7 @@ package br.edu.utfpr.maqcontrol;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,9 +31,6 @@ public class Funcao implements Serializable {
 
     @Column(name = "descricao", length = 50)
     private String descricao;
-
-    @ManyToMany(mappedBy = "funcao")
-    private List<Funcionario> funcionario;
 
     public Funcao() {
     }

@@ -7,19 +7,19 @@ package br.edu.utfpr.maqcontrol;
  */
 import br.edu.utfpr.enums.TMaquina;
 import br.edu.utfpr.enums.TProduto;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,8 +31,11 @@ public class Produto {
     @Column(name = "idProduto", unique = true, nullable = false)
     private int id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.produto", cascade=CascadeType.ALL)
-    private List<OperacaoServico> operacaoServico;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OperacaoServico> operacaoServico = new ArrayList<>();    
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServicoManutencao> servicoManutencao = new ArrayList<>();
 
     @Column(name = "descricao", length = 50)
     private String descricao;
@@ -47,8 +50,10 @@ public class Produto {
     //@Enumerated(EnumType.STRING)
     private TMaquina tipoMaquina;
 
-    @OneToOne
-    @JoinColumn(name = "idMarca")
+    //@OneToOne
+    //@JoinColumn(name = "idMarca")
+    @ManyToOne
+    @JoinColumn(name = "id_marca", foreignKey = @ForeignKey(name = "FK_MRCA_PRODUTO"))
     public Marca marca;
 
     public Produto() {

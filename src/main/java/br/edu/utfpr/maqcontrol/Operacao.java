@@ -6,19 +6,22 @@
 package br.edu.utfpr.maqcontrol;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
@@ -38,27 +41,29 @@ public class Operacao implements Serializable {
     @Column(name = "tamanhoArea")
     private float tamanhoArea;
 
-    @ManyToMany
-    @JoinTable(name = "manutencaoOperacao", catalog = "maqcontrol",
-            joinColumns = {
-                @JoinColumn(name = "idOperacao")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "idManutencao")})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Manutencao> manutencao;
 
-    @OneToOne
-    @JoinColumn(name = "idArea")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Maquina> maquina;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_area", foreignKey = @ForeignKey(name = "FK_AREA_OPERACAO"))
     public Area area;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.operacao")
-    private List<OperacaoServico> operacaoServico;
+    @OneToMany(mappedBy = "operacao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OperacaoServico> operacaoServico = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "idTipo")
+//    @OneToOne
+//    @JoinColumn(name = "idTipo")
+    @ManyToOne
+    @JoinColumn(name = "id_toperacao", foreignKey = @ForeignKey(name = "FK_TOPERACAO_OPERACAO"))
     public TipoOperacao tipoOperacao;
 
-    @OneToOne
-    @JoinColumn(name = "idFuncionario")
+    //@OneToOne
+    //@JoinColumn(name = "idFuncionario")
+    @ManyToOne
+    @JoinColumn(name = "id_funcionario", foreignKey = @ForeignKey(name = "FK_FUNCIONARIO_OPERACAO"))
     public Funcionario funcionario;
 
     @Type(type = "date")
