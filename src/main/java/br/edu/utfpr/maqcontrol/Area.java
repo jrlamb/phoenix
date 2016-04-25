@@ -29,8 +29,6 @@ public class Area implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    //@OneToOne
-    //@JoinColumn(name = "idEmpresa")
     @ManyToOne
     @JoinColumn(name = "id_empresa", foreignKey = @ForeignKey(name = "FK_EMPRESA_AREA"))
     public Empresa empresa;
@@ -44,10 +42,12 @@ public class Area implements Serializable {
     public Area() {
     }
 
-    public Area(Empresa empresa, String descricao, float tamanho) {
-        this.empresa = empresa;
+    public Area(String descricao, float tamanho) {
         this.descricao = descricao;
         this.tamanho = tamanho;
     }
 
+    public void addEmpresa(Empresa e) {
+        this.empresa = e;
+    }
 }
