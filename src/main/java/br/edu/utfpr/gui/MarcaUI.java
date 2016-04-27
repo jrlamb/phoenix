@@ -5,30 +5,29 @@
  */
 package br.edu.utfpr.gui;
 
-import br.edu.utfpr.gui.command.Command;
-import br.edu.utfpr.gui.command.ExcluirCommand;
-import br.edu.utfpr.gui.command.SalvarCommand;
-import br.edu.utfpr.gui.state.StateUI;
+import br.edu.utfpr.gui.command.*;
+import br.edu.utfpr.gui.state.*;
+
 import br.edu.utfpr.gui.state.NovoUI;
 import br.edu.utfpr.gui.state.SalvarUI;
+import br.edu.utfpr.maqcontrol.Marca;
 
 /**
  *
- * @author Juliano Rodrifo Lamb
+ * @author JulianoRodrigo
  */
-public class Area extends javax.swing.JFrame {
+public class MarcaUI extends javax.swing.JFrame {
 
     StateUI state;
     Command command;
+    Marca marca;
 
     /**
-     * Creates new form Area
+     * Creates new form Marca
      */
-    public Area() {
-        initComponents();
-        state = new NovoUI();
-        state.gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
-
+    public MarcaUI() {
+        initComponents();    
+        marca = new Marca();
     }
 
     /**
@@ -40,14 +39,11 @@ public class Area extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("maqcontrol?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        marcaQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
+        marcaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery.getResultList();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jDescricao = new javax.swing.JTextField();
         bNovo = new javax.swing.JButton();
         bSalvar = new javax.swing.JButton();
         bListagem = new javax.swing.JButton();
@@ -57,18 +53,9 @@ public class Area extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("***MaqControl*** Áreas de produção");
-        setResizable(false);
+        setTitle("***MaqControl***  Marcas");
 
-        jLabel1.setText("Código");
-
-        jLabel2.setText("Descrição da área");
-
-        jLabel3.setText("Propriedade");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel4.setText("Tamanho");
+        jLabel2.setText("Descrição");
 
         bNovo.setText("Novo");
         bNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +72,11 @@ public class Area extends javax.swing.JFrame {
         });
 
         bListagem.setText("Listagem");
+        bListagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bListagemActionPerformed(evt);
+            }
+        });
 
         bExcluir.setText("Excluir");
         bExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -97,13 +89,10 @@ public class Area extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,24 +107,12 @@ public class Area extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(0, 222, Short.MAX_VALUE))
-                                    .addComponent(jTextField2))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
+                        .addGap(46, 46, 46)
                         .addComponent(bNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bSalvar)
@@ -145,36 +122,17 @@ public class Area extends javax.swing.JFrame {
                         .addComponent(bExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bFechar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(jDescricao))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addComponent(jDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bNovo)
                     .addComponent(bSalvar)
@@ -183,44 +141,42 @@ public class Area extends javax.swing.JFrame {
                     .addComponent(bFechar))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNovoActionPerformed
-        // TODO add your handling code here:
-
-        
         state = new NovoUI();
         state.gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
-
     }//GEN-LAST:event_bNovoActionPerformed
 
     private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalvarActionPerformed
-        // TODO add your handling code here:
+        marca = new Marca(jDescricao.getText());
+
         command = new SalvarCommand();
-//        command.execute();
+        command.execute(marca);
 
         state = new SalvarUI();
         state.gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
     }//GEN-LAST:event_bSalvarActionPerformed
 
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
-        command = new ExcluirCommand();
+//        command = new ExcluirCommand();
 //        command.execute();
-        // TODO add your handling code here:
     }//GEN-LAST:event_bExcluirActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        // TODO add your handling code here:
         bExcluir.setEnabled(true);
     }//GEN-LAST:event_jTable1MousePressed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void bListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListagemActionPerformed
+        command = new ListarCommand();
+        command.execute(marca);
+
+    }//GEN-LAST:event_bListagemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bExcluir;
@@ -228,15 +184,12 @@ public class Area extends javax.swing.JFrame {
     private javax.swing.JButton bListagem;
     private javax.swing.JButton bNovo;
     private javax.swing.JButton bSalvar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.persistence.EntityManager entityManager;
+    private javax.swing.JTextField jDescricao;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private java.util.List<br.edu.utfpr.maqcontrol.Marca> marcaList;
+    private javax.persistence.Query marcaQuery;
     // End of variables declaration//GEN-END:variables
 }

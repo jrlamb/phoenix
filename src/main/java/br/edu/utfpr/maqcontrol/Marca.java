@@ -32,4 +32,10 @@ public class Marca {
         this.descricao = descricao;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    
+    
 }

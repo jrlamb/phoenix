@@ -12,6 +12,7 @@ import br.edu.utfpr.maqcontrol.Marca;
 import br.edu.utfpr.maqcontrol.Produto;
 import br.edu.utfpr.enums.TMaquina;
 import br.edu.utfpr.enums.TProduto;
+import br.edu.utfpr.gui.Principal;
 import java.util.Date;
 
 /**
@@ -21,15 +22,15 @@ import java.util.Date;
 public class App {
 
     public static void main(String[] args) {
-        DAO dao = new DAO();
-        Marca marca = new Marca("John Deere");
-        dao.add(marca);
+        new Principal().setVisible(true);
+//        DAO dao = new DAO();
+//        Marca marca = new Marca("John Deere");
+//        dao.add(marca);
 
         //Maquina maquina = new Maquina("Maquina", marca, TMaquina.COLHEDORA);
         //dao.add(maquina);
-
-////        Produto produto = new Produto("Filtro", TProduto.FILTRO_AR_FILTRANTE, 100, TMaquina.TRATOR, marca);
-////        dao.add(produto);
+//        Produto produto = new Produto("Filtro", TProduto.FILTRO_AR_FILTRANTE, 100, TMaquina.TRATOR, marca);
+//        dao.add(produto);
 //
 //        Date now = new Date();
 //        // SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -37,6 +38,5 @@ public class App {
 //        CotacaoProduto cotacaoProduto = new CotacaoProduto(now, produto, 100.5f);
 //        dao.add(cotacaoProduto);
 //        System.exit(0);
-
     }
 }

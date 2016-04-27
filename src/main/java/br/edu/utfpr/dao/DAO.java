@@ -7,6 +7,7 @@ package br.edu.utfpr.dao;
 
 import br.edu.utfpr.config.HibernateConnector;
 import br.edu.utfpr.maqcontrol.Maquina;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -58,20 +59,18 @@ public class DAO<T> {
         }
     }
 
-//    public void delete(int id) {
-//        try {
-//            session = HibernateConnector.getInstance().getSession();
-//            Transaction beginTransaction = session.beginTransaction();
-//            Query createQuery = session.createQuery("delete from Maquina s where s.id =:id");
-//            createQuery.setParameter("id", id);
-//            createQuery.executeUpdate();
-//            beginTransaction.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//    }
+    public List<Object> get(String table) {
+        List lista = new ArrayList();
+        try {
+            session = HibernateConnector.getInstance().getSession();
+            lista = session.createQuery("from Marca").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lista;
+    }
 //    public List<Maquina> listMaquina() {
 //        Session session = null;
 //        try {

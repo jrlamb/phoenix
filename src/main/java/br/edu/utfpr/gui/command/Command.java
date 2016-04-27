@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.gui;
-
-import javax.swing.JButton;
+package br.edu.utfpr.gui.command;
 
 /**
  *
  * @author JulianoRodrigo
  */
-public interface StateUI {
-
-    public void gerenciar(JButton bNovo, JButton bSalvar, JButton bListagem, JButton bExcluir, JButton bFechar);
+public interface Command {
+    public void execute(Object o);
 }

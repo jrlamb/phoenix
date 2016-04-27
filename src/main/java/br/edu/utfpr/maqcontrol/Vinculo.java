@@ -8,6 +8,7 @@ package br.edu.utfpr.maqcontrol;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,4 +57,32 @@ public class Vinculo implements Serializable {
 
     @Column(name = "status", length = 12)
     private String status;
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.funcionario);
+        hash = 53 * hash + Objects.hashCode(this.empresa);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vinculo other = (Vinculo) obj;
+        if (!Objects.equals(this.funcionario, other.funcionario)) {
+            return false;
+        }
+        if (!Objects.equals(this.empresa, other.empresa)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
