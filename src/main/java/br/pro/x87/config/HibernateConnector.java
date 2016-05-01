@@ -31,7 +31,7 @@ public class HibernateConnector {
         cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/maqcontrol");
         cfg.setProperty("hibernate.connection.username", "root");
-        cfg.setProperty("hibernate.connection.password", "root");
+        cfg.setProperty("hibernate.connection.password", "mysql");
         cfg.setProperty("hibernate.show_sql", "false");
         cfg.setProperty("hibernate.hbm2ddl.auto", "update");
 

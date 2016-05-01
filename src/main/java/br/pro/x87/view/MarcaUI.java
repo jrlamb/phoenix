@@ -15,6 +15,8 @@ import br.pro.x87.view.command.SalvarCommand;
 import br.pro.x87.view.state.StateUI;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -42,7 +44,7 @@ public class MarcaUI extends javax.swing.JFrame {
     public MarcaUI() {
         atualizar();
         initComponents();
-
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     /**
@@ -53,23 +55,7 @@ public class MarcaUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("maqcontrol?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        marcaQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery.getResultList();
-        marcaQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery1.getResultList();
-        marcaQuery2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery2.getResultList();
-        marcaQuery3 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery3.getResultList();
-        marcaQuery4 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList4 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery4.getResultList();
-        marcaQuery5 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList5 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery5.getResultList();
-        marcaQuery6 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Marca m");
-        marcaList6 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : marcaQuery6.getResultList();
         jLabel2 = new javax.swing.JLabel();
         jDescricao = new javax.swing.JTextField();
         bNovo = new javax.swing.JButton();
@@ -84,9 +70,6 @@ public class MarcaUI extends javax.swing.JFrame {
         setTitle("***MaqControl***  Marcas");
 
         jLabel2.setText("Descrição");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JTable(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.descricao}"), jDescricao, org.jdesktop.beansbinding.BeanProperty.create("text_ON_ACTION_OR_FOCUS_LOST"));
-        bindingGroup.addBinding(binding);
 
         bNovo.setText("Novo");
         bNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +102,12 @@ public class MarcaUI extends javax.swing.JFrame {
         bFechar.setText("Fechar");
 
         jTable1.setModel(table);
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,45 +115,46 @@ public class MarcaUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bNovo)
+                        .addGap(21, 21, 21)
+                        .addComponent(bNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(bSalvar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bListagem)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bExcluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bFechar)))))
-                .addContainerGap(76, Short.MAX_VALUE))
+                        .addComponent(bSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bListagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(31, 31, 31))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jDescricao)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bNovo)
                     .addComponent(bSalvar)
                     .addComponent(bListagem)
                     .addComponent(bExcluir)
                     .addComponent(bFechar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -199,6 +189,14 @@ public class MarcaUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bListagemActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int pos = jTable1.getSelectedRow();
+        Marca m = new Marca();
+        m = lista.get(pos);
+        jDescricao.setText(m.getDescricao());
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bExcluir;
@@ -206,25 +204,9 @@ public class MarcaUI extends javax.swing.JFrame {
     private javax.swing.JButton bListagem;
     private javax.swing.JButton bNovo;
     private javax.swing.JButton bSalvar;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JTextField jDescricao;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private java.util.List<br.pro.x87.model.Marca> marcaList;
-    private java.util.List<br.pro.x87.model.Marca> marcaList1;
-    private java.util.List<br.pro.x87.model.Marca> marcaList2;
-    private java.util.List<br.pro.x87.model.Marca> marcaList3;
-    private java.util.List<br.pro.x87.model.Marca> marcaList4;
-    private java.util.List<br.pro.x87.model.Marca> marcaList5;
-    private java.util.List<br.pro.x87.model.Marca> marcaList6;
-    private javax.persistence.Query marcaQuery;
-    private javax.persistence.Query marcaQuery1;
-    private javax.persistence.Query marcaQuery2;
-    private javax.persistence.Query marcaQuery3;
-    private javax.persistence.Query marcaQuery4;
-    private javax.persistence.Query marcaQuery5;
-    private javax.persistence.Query marcaQuery6;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
