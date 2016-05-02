@@ -10,13 +10,21 @@ import br.pro.x87.dao.DAO;
 import br.pro.x87.view.state.NovoUI;
 import br.pro.x87.view.state.SalvarUI;
 import br.pro.x87.model.Marca;
-import br.pro.x87.view.command.Command;
+import br.pro.x87.view.command.ExcluirCommand;
 import br.pro.x87.view.command.SalvarCommand;
-import br.pro.x87.view.state.StateUI;
-import java.util.ArrayList;
+import br.pro.x87.view.state.AtualizarUI;
+import br.pro.x87.view.state.ExcluirUI;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 /**
  *
@@ -27,24 +35,33 @@ public class MarcaUI extends javax.swing.JFrame {
     private List<Marca> lista;
     private GenericTableModel table;
     private DAO dao = new DAO();
-
-    private StateUI state;
-    private Command command;
     private Marca marca;
+    private boolean update;
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
 
     /**
      * Creates new form Marca
      */
-    private void atualizar() {
-        lista = dao.get("Marca");
-        table = new GenericTableModel(lista, Marca.class);
-
-    }
-
     public MarcaUI() {
-        atualizar();
         initComponents();
-        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        new NovoUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+        jTabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        refreshTable();
     }
 
     /**
@@ -64,7 +81,9 @@ public class MarcaUI extends javax.swing.JFrame {
         bExcluir = new javax.swing.JButton();
         bFechar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTabela = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        StatusBar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("***MaqControl***  Marcas");
@@ -72,6 +91,14 @@ public class MarcaUI extends javax.swing.JFrame {
         jLabel2.setText("Descrição");
 
         bNovo.setText("Novo");
+        bNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bNovoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bNovoMouseExited(evt);
+            }
+        });
         bNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bNovoActionPerformed(evt);
@@ -79,6 +106,14 @@ public class MarcaUI extends javax.swing.JFrame {
         });
 
         bSalvar.setText("Salvar");
+        bSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bSalvarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bSalvarMouseExited(evt);
+            }
+        });
         bSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bSalvarActionPerformed(evt);
@@ -86,6 +121,14 @@ public class MarcaUI extends javax.swing.JFrame {
         });
 
         bListagem.setText("Listagem");
+        bListagem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bListagemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bListagemMouseExited(evt);
+            }
+        });
         bListagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bListagemActionPerformed(evt);
@@ -93,6 +136,14 @@ public class MarcaUI extends javax.swing.JFrame {
         });
 
         bExcluir.setText("Excluir");
+        bExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bExcluirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bExcluirMouseExited(evt);
+            }
+        });
         bExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bExcluirActionPerformed(evt);
@@ -100,15 +151,55 @@ public class MarcaUI extends javax.swing.JFrame {
         });
 
         bFechar.setText("Fechar");
-
-        jTable1.setModel(table);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+        bFechar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bFecharMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bFecharMouseExited(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        bFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFecharActionPerformed(evt);
+            }
+        });
+
+        jTabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTabela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabelaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTabela);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        StatusBar.setForeground(new java.awt.Color(153, 153, 153));
+        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(StatusBar)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(StatusBar))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,10 +223,10 @@ public class MarcaUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jDescricao)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jDescricao, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,37 +242,45 @@ public class MarcaUI extends javax.swing.JFrame {
                     .addComponent(bListagem)
                     .addComponent(bExcluir)
                     .addComponent(bFechar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNovoActionPerformed
-        state = new NovoUI();
-        state.gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+        new NovoUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+        setUpdate(false);
+        jDescricao.setText("");
+        jDescricao.requestFocus();
     }//GEN-LAST:event_bNovoActionPerformed
 
     private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalvarActionPerformed
-        marca = new Marca(jDescricao.getText());
+        if (!validar()) {
+            return;
+        }
 
-        command = new SalvarCommand();
-        command.execute(marca);
+        if (!isUpdate()) {
+            setMarca(new Marca(jDescricao.getText()));
+        } else {
+            getMarca().setDescricao(jDescricao.getText());
+        }
 
-        state = new SalvarUI();
-        state.gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+        new SalvarCommand().execute(marca);
+        new SalvarUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
 
-        atualizar();
-        jTable1.setModel(table);
-        jTable1.repaint();
-
+        refreshTable();
     }//GEN-LAST:event_bSalvarActionPerformed
 
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
-//        command = new ExcluirCommand();
-//        command.execute();
+        new ExcluirCommand().execute(marca);
+        new ExcluirUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+
+        refreshTable();
     }//GEN-LAST:event_bExcluirActionPerformed
 
     private void bListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListagemActionPerformed
@@ -189,16 +288,62 @@ public class MarcaUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bListagemActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int pos = jTable1.getSelectedRow();
-        Marca m = new Marca();
-        m = lista.get(pos);
-        jDescricao.setText(m.getDescricao());
+    private void jTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabelaMouseClicked
+        setUpdate(true);
+        int pos = jTabela.getSelectedRow();
+        setMarca(lista.get(pos));
+        jDescricao.setText(getMarca().getDescricao());
+        new AtualizarUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
 
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_jTabelaMouseClicked
+
+    private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_bFecharActionPerformed
+
+    private void bNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bNovoMouseEntered
+        StatusBar.setText("Clique aqui para cadastrar uma nova marca");
+    }//GEN-LAST:event_bNovoMouseEntered
+
+    private void bNovoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bNovoMouseExited
+        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+    }//GEN-LAST:event_bNovoMouseExited
+
+    private void bSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSalvarMouseEntered
+        StatusBar.setText("Clique aqui para salvar suas informações");
+    }//GEN-LAST:event_bSalvarMouseEntered
+
+    private void bSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSalvarMouseExited
+        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+    }//GEN-LAST:event_bSalvarMouseExited
+
+    private void bListagemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bListagemMouseEntered
+        StatusBar.setText("Clique aqui para imprimir a listagem completa");
+    }//GEN-LAST:event_bListagemMouseEntered
+
+    private void bListagemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bListagemMouseExited
+        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+    }//GEN-LAST:event_bListagemMouseExited
+
+    private void bExcluirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExcluirMouseEntered
+        StatusBar.setText("Clique aqui para excluir o registro selecionado");
+    }//GEN-LAST:event_bExcluirMouseEntered
+
+    private void bExcluirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExcluirMouseExited
+        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+    }//GEN-LAST:event_bExcluirMouseExited
+
+    private void bFecharMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bFecharMouseEntered
+        StatusBar.setText("Clique aqui para fechar a janela");
+    }//GEN-LAST:event_bFecharMouseEntered
+
+    private void bFecharMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bFecharMouseExited
+        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+    }//GEN-LAST:event_bFecharMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel StatusBar;
     private javax.swing.JButton bExcluir;
     private javax.swing.JButton bFechar;
     private javax.swing.JButton bListagem;
@@ -206,7 +351,27 @@ public class MarcaUI extends javax.swing.JFrame {
     private javax.swing.JButton bSalvar;
     private javax.swing.JTextField jDescricao;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTabela;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshTable() {
+        lista = dao.get("Marca");
+        table = new GenericTableModel(lista, Marca.class);
+        jTabela.setModel(table);
+        jTabela.repaint();
+
+        jDescricao.setText("");
+    }
+
+    private boolean validar() {
+        if (jDescricao.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "A descrição não pode ser vazia!");
+            return false;
+        }
+
+        return true;
+    }
+
 }

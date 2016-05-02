@@ -8,6 +8,7 @@ package br.pro.x87.model;
 import br.pro.x87.controller.Titulo;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,9 +20,6 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "marca", catalog = "maqcontrol")
 public class Marca {
-
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -39,7 +37,6 @@ public class Marca {
     public void setId(int id) {
         int oldId = this.id;
         this.id = id;
-        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public Marca() {
@@ -58,16 +55,31 @@ public class Marca {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
-    
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.id;
+        hash = 53 * hash + Objects.hashCode(this.descricao);
+        return hash;
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Marca other = (Marca) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        return true;
     }
 
 }

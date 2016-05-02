@@ -5,6 +5,7 @@
  */
 package br.pro.x87.view.command;
 
+import br.pro.x87.dao.DAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +16,8 @@ public class ExcluirCommand implements Command{
 
     @Override
     public void execute(Object o) {
-        JOptionPane.showMessageDialog(null, "Excluir");
+        DAO dao = new DAO();
+        dao.delete(o);
     }
     
 }

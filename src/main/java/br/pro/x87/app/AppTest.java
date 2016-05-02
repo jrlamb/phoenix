@@ -17,10 +17,16 @@ public class AppTest {
         DAO dao = new DAO();
         Marca marca = new Marca("teste");
         
+        
+        
         dao.add(marca);
         
-        marca.setDescricao("sobrescruti");
-        dao.update(marca);
+        
+        DAO dao1 = new DAO();
+        Marca marca1;
+        marca1 = marca;
+        marca1.setDescricao("sobrescruti");
+        dao1.update(marca1);
         
         
     }

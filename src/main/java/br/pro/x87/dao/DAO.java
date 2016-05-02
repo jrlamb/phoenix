@@ -38,6 +38,7 @@ public class DAO<T> {
 
     public void delete(T object) {
         try {
+            session = HibernateConnector.getInstance().getSession();
             transaction = session.beginTransaction();
             session.delete(object);
             transaction.commit();
