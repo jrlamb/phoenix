@@ -7,43 +7,36 @@ package br.pro.x87.view;
 
 import br.pro.x87.controller.GenericTableModel;
 import br.pro.x87.dao.DAO;
-import br.pro.x87.view.state.NovoUI;
-import br.pro.x87.view.state.SalvarUI;
+import br.pro.x87.enums.TEstado;
+import br.pro.x87.model.Cidade;
 import br.pro.x87.model.Marca;
 import br.pro.x87.view.command.ExcluirCommand;
 import br.pro.x87.view.command.SalvarCommand;
 import br.pro.x87.view.state.AtualizarUI;
 import br.pro.x87.view.state.ExcluirUI;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import br.pro.x87.view.state.NovoUI;
+import br.pro.x87.view.state.SalvarUI;
 import java.util.List;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 
 /**
  *
  * @author JulianoRodrigo
  */
-public class MarcaUI extends javax.swing.JFrame {
+public class CidadeUI extends javax.swing.JFrame {
 
-    private List<Marca> lista;
+    private Cidade cidade;
+    private boolean update;
+    private List<Cidade> lista;
     private GenericTableModel table;
     private DAO dao = new DAO();
-    private Marca marca;
-    private boolean update;
 
-    public Marca getMarca() {
-        return marca;
+    public Cidade getCidade() {
+        return cidade;
     }
 
-    public void setMarca(Marca marca) {
-        this.marca = marca;
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
     public boolean isUpdate() {
@@ -55,13 +48,12 @@ public class MarcaUI extends javax.swing.JFrame {
     }
 
     /**
-     * Creates new form Marca
+     * Creates new form CidadeUI
      */
-    public MarcaUI() {
+    public CidadeUI() {
         initComponents();
-        new NovoUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
-        jTabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         refreshTable();
+        popularCombo();
     }
 
     /**
@@ -73,8 +65,8 @@ public class MarcaUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jDescricao = new javax.swing.JTextField();
+        comboEstados = new javax.swing.JComboBox();
         bNovo = new javax.swing.JButton();
         bSalvar = new javax.swing.JButton();
         bListagem = new javax.swing.JButton();
@@ -84,11 +76,10 @@ public class MarcaUI extends javax.swing.JFrame {
         jTabela = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         StatusBar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("***MaqControl***  Marcas");
-
-        jLabel2.setText("Descrição");
 
         bNovo.setText("Novo");
         bNovo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -201,40 +192,50 @@ public class MarcaUI extends javax.swing.JFrame {
                 .addComponent(StatusBar))
         );
 
+        jLabel1.setText("Nome");
+
+        jLabel2.setText("Estado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(bNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(30, 30, 30)
                         .addComponent(bSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(30, 30, 30)
                         .addComponent(bListagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(30, 30, 30)
                         .addComponent(bExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(31, 31, 31))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDescricao, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(31, 31, 31))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(30, 30, 30)
+                        .addComponent(bFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDescricao)
+                            .addComponent(jLabel1))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2))))
+                .addGap(36, 36, 36))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bNovo)
@@ -242,15 +243,22 @@ public class MarcaUI extends javax.swing.JFrame {
                     .addComponent(bListagem)
                     .addComponent(bExcluir)
                     .addComponent(bFechar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bNovoMouseEntered
+        StatusBar.setText("Clique aqui para cadastrar uma nova cidade");
+    }//GEN-LAST:event_bNovoMouseEntered
+
+    private void bNovoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bNovoMouseExited
+        StatusBar.setText("***MaqControl*** Cadastro de cidades");
+    }//GEN-LAST:event_bNovoMouseExited
 
     private void bNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNovoActionPerformed
         new NovoUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
@@ -259,87 +267,81 @@ public class MarcaUI extends javax.swing.JFrame {
         jDescricao.requestFocus();
     }//GEN-LAST:event_bNovoActionPerformed
 
-    private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalvarActionPerformed
-        if (!validar()) {
-            return;
-        }
-
-        if (!isUpdate()) {
-            setMarca(new Marca(jDescricao.getText()));
-        } else {
-            getMarca().setDescricao(jDescricao.getText());
-        }
-
-        new SalvarCommand().execute(marca);
-        new SalvarUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
-
-        refreshTable();
-    }//GEN-LAST:event_bSalvarActionPerformed
-
-    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
-        new ExcluirCommand().execute(marca);
-        new ExcluirUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
-
-        refreshTable();
-    }//GEN-LAST:event_bExcluirActionPerformed
-
-    private void bListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListagemActionPerformed
-
-
-    }//GEN-LAST:event_bListagemActionPerformed
-
-    private void jTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabelaMouseClicked
-        setUpdate(true);
-        int pos = jTabela.getSelectedRow();
-        setMarca(lista.get(pos));
-        jDescricao.setText(getMarca().getDescricao());
-        new AtualizarUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
-
-    }//GEN-LAST:event_jTabelaMouseClicked
-
-    private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_bFecharActionPerformed
-
-    private void bNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bNovoMouseEntered
-        StatusBar.setText("Clique aqui para cadastrar uma nova marca");
-    }//GEN-LAST:event_bNovoMouseEntered
-
-    private void bNovoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bNovoMouseExited
-        StatusBar.setText("***MaqControl*** Cadastro de marcas");
-    }//GEN-LAST:event_bNovoMouseExited
-
     private void bSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSalvarMouseEntered
         StatusBar.setText("Clique aqui para salvar suas informações");
     }//GEN-LAST:event_bSalvarMouseEntered
 
     private void bSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSalvarMouseExited
-        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+        StatusBar.setText("***MaqControl*** Cadastro de cidades");
     }//GEN-LAST:event_bSalvarMouseExited
+
+    private void bSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalvarActionPerformed
+
+        if (!validar()) {
+            return;
+        }
+
+        String estado = (String) comboEstados.getSelectedItem();        
+       
+        if (!isUpdate()) {
+            setCidade(new Cidade(jDescricao.getText(), estado));
+        } else {
+            getCidade().setNome(jDescricao.getText());
+            getCidade().setEstado(estado);
+        }
+
+        new SalvarCommand().execute(cidade);
+        new SalvarUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+
+        refreshTable();
+    }//GEN-LAST:event_bSalvarActionPerformed
 
     private void bListagemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bListagemMouseEntered
         StatusBar.setText("Clique aqui para imprimir a listagem completa");
     }//GEN-LAST:event_bListagemMouseEntered
 
     private void bListagemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bListagemMouseExited
-        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+        StatusBar.setText("***MaqControl*** Cadastro de cidades");
     }//GEN-LAST:event_bListagemMouseExited
+
+    private void bListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListagemActionPerformed
+
+    }//GEN-LAST:event_bListagemActionPerformed
 
     private void bExcluirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExcluirMouseEntered
         StatusBar.setText("Clique aqui para excluir o registro selecionado");
     }//GEN-LAST:event_bExcluirMouseEntered
 
     private void bExcluirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExcluirMouseExited
-        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+        StatusBar.setText("***MaqControl*** Cadastro de cidades");
     }//GEN-LAST:event_bExcluirMouseExited
+
+    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
+        new ExcluirCommand().execute(cidade);
+        new ExcluirUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+
+        refreshTable();
+    }//GEN-LAST:event_bExcluirActionPerformed
 
     private void bFecharMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bFecharMouseEntered
         StatusBar.setText("Clique aqui para fechar a janela");
     }//GEN-LAST:event_bFecharMouseEntered
 
     private void bFecharMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bFecharMouseExited
-        StatusBar.setText("***MaqControl*** Cadastro de marcas");
+        StatusBar.setText("***MaqControl*** Cadastro de cidades");
     }//GEN-LAST:event_bFecharMouseExited
+
+    private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_bFecharActionPerformed
+
+    private void jTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabelaMouseClicked
+        setUpdate(true);
+        int pos = jTabela.getSelectedRow();
+        setCidade(lista.get(pos));
+        jDescricao.setText(getCidade().getNome());
+        new AtualizarUI().gerenciar(bNovo, bSalvar, bListagem, bExcluir, bFechar);
+    }//GEN-LAST:event_jTabelaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -349,20 +351,19 @@ public class MarcaUI extends javax.swing.JFrame {
     private javax.swing.JButton bListagem;
     private javax.swing.JButton bNovo;
     private javax.swing.JButton bSalvar;
+    private javax.swing.JComboBox comboEstados;
     private javax.swing.JTextField jDescricao;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTabela;
     // End of variables declaration//GEN-END:variables
 
-    private void refreshTable() {
-        lista = dao.get("Marca");
-        table = new GenericTableModel(lista, Marca.class);
-        jTabela.setModel(table);
-        jTabela.repaint();
-
-        jDescricao.setText("");
+    private void popularCombo() {
+        for (TEstado o : TEstado.values()) {
+            comboEstados.addItem(o.getNome());
+        }
     }
 
     private boolean validar() {
@@ -374,4 +375,12 @@ public class MarcaUI extends javax.swing.JFrame {
         return true;
     }
 
+    private void refreshTable() {
+        lista = dao.get("Cidade");
+        table = new GenericTableModel(lista, Cidade.class);
+        jTabela.setModel(table);
+        jTabela.repaint();
+
+        jDescricao.setText("");
+    }
 }

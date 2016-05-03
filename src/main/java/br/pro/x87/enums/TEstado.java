@@ -10,5 +10,15 @@ package br.pro.x87.enums;
  * @author JulianoRodrigo
  */
 public enum TEstado {
-    PARANA, SANTA_CATARINA, RIO_GRANDE_DO_SUL;
+    PARANA ("Paraná"), SANTA_CATARINA ("Santa Catarina"), RIO_GRANDE_DO_SUL ("Rio Grande do Sul");    
+    
+    private String nome;   
+
+    private TEstado(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }    
 }

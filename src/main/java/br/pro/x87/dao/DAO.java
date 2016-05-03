@@ -9,6 +9,7 @@ import br.pro.x87.config.HibernateConnector;
 import br.pro.x87.model.Maquina;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -66,7 +67,9 @@ public class DAO<T> {
         List lista = new ArrayList();
         try {
             session = HibernateConnector.getInstance().getSession();
-            lista = session.createQuery("from Marca").list();
+            String hql = "FROM " + table;
+            Query query = session.createQuery(hql);            
+            lista = query.list();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

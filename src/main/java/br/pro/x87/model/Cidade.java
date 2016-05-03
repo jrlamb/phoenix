@@ -5,6 +5,7 @@
  */
 package br.pro.x87.model;
 
+import br.pro.x87.controller.Titulo;
 import br.pro.x87.enums.TEstado;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -32,15 +33,42 @@ public class Cidade implements Serializable {
     @Column(name = "nome", length = 50)
     private String nome;
 
-    @Column(name = "estado", length = 20)
-    //@Enumerated(EnumType.STRING)
-    private TEstado estado;
+    @Column(name = "estado", length = 30)
+    private String estado;
 
     public Cidade() {
     }
 
-    public Cidade(String nome, TEstado estado) {
+    public Cidade(String nome, String estado) {
         this.nome = nome;
         this.estado = estado;
     }
+
+    @Titulo(nome = "Nome", numeroDaColuna = 1)
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @Titulo(nome = "Estado", numeroDaColuna = 2)
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @Titulo(nome = "Código", numeroDaColuna = 0)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }
